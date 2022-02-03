@@ -1,5 +1,26 @@
 version: '3'
+
+
 services:
+  # website:
+  #   build: .
+  #   # ports: ["5001:80"]
+  #   ports: ["8080:80"]
+  #   # ports:
+  #   #   - 8080
+  #   extra_hosts:
+  #     - "docker.for.mac.host.internal:host-gateway"
   website:
-    build: .
-    ports: ["5001:80"]
+    image: httpd:2.4.52
+    ports:
+      - 80:80
+    # command: "php -S 0.0.0.0:80 -t ."
+    # working_dir: "/var/www/html"
+    volumes:
+      - './public:/usr/local/apache2/htdocs'
+    # environment:
+    #   PHP_XDEBUG: 1
+    #   PHP_XDEBUG_MODE: debug
+    #   PHP_IDE_CONFIG: serverName=my-ide
+    #   PHP_XDEBUG_IDEKEY: "my-ide"
+    #   PHP_XDEBUG_CLIENT_HOST: host.docker.internal
