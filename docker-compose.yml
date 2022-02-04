@@ -2,22 +2,22 @@ version: '3'
 
 
 services:
-  # website:
-  #   build: .
-  #   # ports: ["5001:80"]
-  #   ports: ["8080:80"]
-  #   # ports:
-  #   #   - 8080
-  #   extra_hosts:
-  #     - "docker.for.mac.host.internal:host-gateway"
   website:
-    image: httpd:2.4.52
-    ports:
-      - 80:80
-    # command: "php -S 0.0.0.0:80 -t ."
-    # working_dir: "/var/www/html"
-    volumes:
-      - './public:/usr/local/apache2/htdocs'
+    build: .
+    # ports: ["5001:80"]
+    ports: ["80:80"]
+    # ports:
+    #   - 8080
+    extra_hosts:
+      - "kubernetes.docker.internal:host-gateway"
+  # website:
+  #   image: httpd:2.4.52
+  #   ports:
+  #     - 80:80
+  #   # command: "php -S 0.0.0.0:80 -t ."
+  #   # working_dir: "/var/www/html"
+  #   volumes:
+      # - './public:usr/local/apache2/htdocs'
     # environment:
     #   PHP_XDEBUG: 1
     #   PHP_XDEBUG_MODE: debug
