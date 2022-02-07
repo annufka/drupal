@@ -2,25 +2,31 @@ version: '3'
 
 
 services:
+
   website:
     build: .
-    # ports: ["5001:80"]
     ports: ["80:80"]
-    # ports:
-    #   - 8080
-    extra_hosts:
-      - "kubernetes.docker.internal:host-gateway"
-  # website:
-  #   image: httpd:2.4.52
-  #   ports:
-  #     - 80:80
-  #   # command: "php -S 0.0.0.0:80 -t ."
-  #   # working_dir: "/var/www/html"
-  #   volumes:
-      # - './public:usr/local/apache2/htdocs'
-    # environment:
-    #   PHP_XDEBUG: 1
-    #   PHP_XDEBUG_MODE: debug
-    #   PHP_IDE_CONFIG: serverName=my-ide
-    #   PHP_XDEBUG_IDEKEY: "my-ide"
-    #   PHP_XDEBUG_CLIENT_HOST: host.docker.internal
+    environment:
+      PHP_XDEBUG: 1
+      PHP_XDEBUG_MODE: debug
+      PHP_IDE_CONFIG: serverName=my-ide
+      PHP_XDEBUG_IDEKEY: "vscode"
+      PHP_XDEBUG_CLIENT_HOST: kubernetes.docker.internal
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_USER: admin
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_ARBITRARY: 1
+    restart: always
+    ports: ["8081:80"]
