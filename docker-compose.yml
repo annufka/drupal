@@ -5,13 +5,17 @@ services:
 
   website:
     build: .
-    ports: ["80:80"]
+    # ports: ["80:80"]
     environment:
       PHP_XDEBUG: 1
       PHP_XDEBUG_MODE: debug
       PHP_IDE_CONFIG: serverName=my-ide
       PHP_XDEBUG_IDEKEY: "vscode"
       PHP_XDEBUG_CLIENT_HOST: kubernetes.docker.internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=Host(`web.localhost`)"
+      - "traefik.http.services.web.loadbalancer.server.port=80"
 
   db:
     image: mysql:5.7
@@ -29,4 +33,18 @@ services:
     environment:
       PMA_ARBITRARY: 1
     restart: always
-    ports: ["8081:80"]
+    # ports: ["8080:80"]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.db.rule=Host(`web.localhost`)"
+      - "traefik.http.services.db.loadbalancer.server.port=8080"
+
+  traefik:
+    image: traefik:v2.3
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "80:80"
+      - "8080:8080"
+    restart: always
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
