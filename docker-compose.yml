@@ -39,7 +39,7 @@ services:
     labels:
       # - "traefik.enable=true"
       - "traefik.http.routers.db.rule=Host(`phpmyadmin.web.localhost`)"
-      - "traefik.http.services.db.loadbalancer.server.port=808"
+      - "traefik.http.services.db.loadbalancer.server.port=80"
 
   traefik:
     image: traefik:v2.3
