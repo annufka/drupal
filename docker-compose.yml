@@ -4,7 +4,9 @@ version: '3'
 services:
 
   website:
-    build: .
+    image: httpd:2.4
+    volumes:
+      - "./public:/usr/local/apache2/htdocs"
     # ports: ["80:80"]
     environment:
       PHP_XDEBUG: 1
@@ -18,12 +20,12 @@ services:
       - "traefik.http.services.web.loadbalancer.server.port=80"
 
   db:
-    image: mysql:5.7
+    image: mariadb
     environment:
-      MYSQL_DATABASE: test
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_PASSWORD: admin
-      MYSQL_USER: admin
+      - MARIADB_ROOT_PASSWORD=admin
+      - MARIADB_DATABASE=test
+      - MARIADB_USER=user
+      - MARIADB_PASSWORD=admin
     restart: always
 
   phpmyadmin:
@@ -35,15 +37,16 @@ services:
     restart: always
     # ports: ["8080:80"]
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.db.rule=Host(`web.localhost`)"
-      - "traefik.http.services.db.loadbalancer.server.port=8080"
+      # - "traefik.enable=true"
+      - "traefik.http.routers.db.rule=Host(`phpmyadmin.web.localhost`)"
+      - "traefik.http.services.db.loadbalancer.server.port=808"
 
   traefik:
     image: traefik:v2.3
     command: --api.insecure=true --providers.docker
     ports:
       - "80:80"
+      - "443:443"
       - "8080:8080"
     restart: always
     volumes:
