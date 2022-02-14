@@ -9,7 +9,7 @@ if (saveButton) { saveButton.addEventListener("click", addItemToList) };
 
 function addItemToList() {
     let user_input = document.getElementById("user-input");
-    listToDo.push(user_input.value);
+    listToDo.push(String(user_input.value));
     addItemToPage(user_input.value);
     user_input.value = "";
 }
@@ -26,7 +26,7 @@ function addItemToPage(lastItem) {
 }
 
 function deleteItem(clickedBtn) {
-    clickedBtn.srcElement.closest('li').remove();
+    let textOfLi = clickedBtn.srcElement.closest('li').innerText;
 }
 
 function doneItem(clickedCheckBox) {
