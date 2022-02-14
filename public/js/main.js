@@ -14,12 +14,11 @@ function addItemToList() {
 }
 
 function addItemToPage(lastItem) {
-    let listInPage = document.getElementsByClassName('list-will-to-do');
     let newLi = document.createElement('li');
     newLi.innerHTML = `<input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
                         ${lastItem}
-                        <button id="btn-delete" class="btn"><i class="fa fa-trash-o" style="font-size:1pem"></i></button>`;
-    listInPage[0].appendChild(newLi);
+                        <button id="btn-delete" class="btn"><i class="fa fa-trash-o" style="font-size:1pem"></i></button>`
+    document.getElementById('list-will-to-do').appendChild(newLi);
 
     // const deleteButton = document.getElementById("btn-delete");
     // if (newLi) { newLi.addEventListener("click", deleteItem) };
