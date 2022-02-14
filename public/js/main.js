@@ -1,29 +1,35 @@
 "use strict";
 
+let listToDo = [];
+
 window.onload = function () {
     const saveButton = document.getElementById("btn-submit");
-    // const clearButton = document.getElementById("btn-reset");
-
-    let listToDo = [];
 
     if (saveButton) { saveButton.addEventListener("click", addItemToList) };
 }
 
 function addItemToList() {
     let user_input = document.getElementById("user-input");
-    console.log(user_input.value);
+    listToDo.push(user_input.value);
+    addItemToPage(user_input.value);
 }
 
-// function resetItemToList(){
+function addItemToPage(lastItem) {
+    let listInPage = document.getElementsByClassName('list-will-to-do');
+    let newLi = document.createElement('div');
+    newLi.innerHTML = `<li>
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
+                        ${lastItem}
+                        <button id="btn-delete"><i class="fa fa-trash-o" style="font-size:1pem"></i></button>
+                        </li>`;
+    listInPage[0].appendChild(newLi);
 
-// }
+    // const deleteButton =document.getElementById("btn-delete");
+    if (newLi) { newLi.addEventListener("click", deleteItem) };
+}
 
-// if (clearButton){clearButton.addEventListener( "click" , resetItemToList)};
+function deleteItem() {
+    let deleteBtn = document.getElementById("btn-delete");
+    deleteBtn.parentElement.remove();
+}
 
-// let item = prompt();
-
-// if (item){
-//     listToDo.push(item);
-// }
-
-// console.log(listToDo);

@@ -2,3 +2,10 @@ body {
   width: 100%;
 }
 
+ul {
+  list-style: none;
+}
+
+/* ul > li > div.btn-delete {
+
+} */
