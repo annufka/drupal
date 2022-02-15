@@ -11,7 +11,7 @@ let listToDo = [];
 let listUlForPage = [];
 
 class Task {
-    constructor(description){
+    constructor(description) {
         this.description = description;
         this.done = false;
     }
@@ -31,9 +31,9 @@ function refreshPage() {
     listUl.innerHTML = "";
     listUlDone.innerHTML = "";
     for (let item in listToDo) {
-        if (listToDo[item].done){
+        if (listToDo[item].done) {
             listUlDone.innerHTML += generateHTML(listToDo[item], item);
-        } else{
+        } else {
             listUl.innerHTML += generateHTML(listToDo[item], item);
         }
     }
@@ -51,16 +51,17 @@ function generateHTML(task, index) {
     return HTML
 }
 
-document.getElementById("list-will-do").addEventListener("click", function(event){
+document.getElementById("list-will-do").addEventListener("click", function (event) {
     actionWithItem(event);
 });
 
-document.getElementById("list-done").addEventListener("click", function(event){
+document.getElementById("list-done").addEventListener("click", function (event) {
     actionWithItem(event);
 
 });
+
 function actionWithItem(event) {
-    if (event.target.tagName == "INPUT"){
+    if (event.target.tagName == "INPUT") {
         listToDo[event.target.id].done = !listToDo[event.target.id].done;
     }
     if (event.target.tagName == "I" || event.target.tagName == "BUTTON") {
