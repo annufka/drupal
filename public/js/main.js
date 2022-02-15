@@ -1,39 +1,70 @@
 "use strict";
 
-// пусть будет
-let listToDo = [];
-
 const saveButton = document.getElementById("btn-submit");
+const listUl = document.getElementById("list-will-do");
+const listUlDone = document.getElementById("list-done");
+const checkButton = document.getElementsByClassName("done");
+const deleteButton = document.getElementsByClassName("btn-delete");
+// пока вместо local storage
+let listToDo = [];
+// это список всех li
+let listUlForPage = [];
+
+class Task {
+    constructor(description){
+        this.description = description;
+        this.done = false;
+    }
+}
 
 if (saveButton) { saveButton.addEventListener("click", addItemToList) };
 
 function addItemToList() {
     let user_input = document.getElementById("user-input");
-    listToDo.push(String(user_input.value));
-    addItemToPage(user_input.value);
+    let newItem = new Task(user_input.value);
+    listToDo.push(newItem);
+    refreshPage();
     user_input.value = "";
 }
 
-function addItemToPage(lastItem) {
-    let newLi = document.createElement('li');
-    newLi.innerHTML = `<input class="form-check-input done" type="checkbox" value="" id="done${lastItem}">
-                        ${lastItem}
-                        <button id="delete${lastItem}" class="btn btn-delete"><i class="fa fa-trash-o" style="font-size:1pem"></i></button>`
-    document.getElementById('list-will-do').appendChild(newLi);
-
-    document.getElementById(`delete${lastItem}`).addEventListener("click", deleteItem);
-    document.getElementById(`done${lastItem}`).addEventListener("click", doneItem);
+function refreshPage() {
+    listUl.innerHTML = "";
+    listUlDone.innerHTML = "";
+    for (let item in listToDo) {
+        if (listToDo[item].done){
+            listUlDone.innerHTML += generateHTML(listToDo[item], item);
+        } else{
+            listUl.innerHTML += generateHTML(listToDo[item], item);
+        }
+    }
+    listUlForPage = document.querySelectorAll('.todo-item');
 }
 
-function deleteItem(clickedBtn) {
-    let textOfLi = clickedBtn.srcElement.closest('li').innerText;
+function generateHTML(task, index) {
+    let HTML = `<div class="todo-item">
+                    <li>
+                        <input id="${index}" class="form-check-input done" type="checkbox" value="" ${task.done ? "checked" : ""}>
+                        ${task.description}
+                        <button id="${index}" class="btn btn-delete"><i id="${index}" class="fa fa-trash-o" style="font-size:1pem"></i></button>
+                    </li>
+                </div>`;
+    return HTML
 }
 
-function doneItem(clickedCheckBox) {
-    let newLi = document.createElement('li');
-    let lastItem = clickedCheckBox.srcElement.closest('li').innerText;
-    newLi.innerHTML = `<input class="form-check-input done" type="checkbox" value="" id="done${lastItem}" checked disabled>
-                        ${lastItem}`
-    document.getElementById('list-done').appendChild(newLi);
-    document.getElementById('list-will-do').removeChild(clickedCheckBox.srcElement.closest('li'));
+document.getElementById("list-will-do").addEventListener("click", function(event){
+    actionWithItem(event);
+});
+
+document.getElementById("list-done").addEventListener("click", function(event){
+    actionWithItem(event);
+
+});
+function actionWithItem(event) {
+    if (event.target.tagName == "INPUT"){
+        listToDo[event.target.id].done = !listToDo[event.target.id].done;
+    }
+    if (event.target.tagName == "I" || event.target.tagName == "BUTTON") {
+        listToDo.splice(event.target.id, 1);
+    }
+    refreshPage();
 }
