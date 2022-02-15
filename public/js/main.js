@@ -5,7 +5,8 @@ const listUl = document.getElementById("list-will-do");
 const listUlDone = document.getElementById("list-done");
 const checkButton = document.getElementsByClassName("done");
 const deleteButton = document.getElementsByClassName("btn-delete");
-// пока вместо local storage
+
+// вместо localStorage
 let listToDo = [];
 // это список всех li
 let listUlForPage = [];
