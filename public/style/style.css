@@ -23,3 +23,7 @@ ul {
   width: 80%;
   height: 80%;
 }
+
+.form-check-input.done{
+  margin-right: 15px;
+}

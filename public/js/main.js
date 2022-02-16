@@ -43,7 +43,7 @@ function refreshPage() {
 
 function generateHTML(task, index) {
     let HTML = `<div class="todo-item">
-                    <li>
+                    <li class="d-flex justify-content-start align-items-center">
                         <input id="${index}" class="form-check-input done" type="checkbox" value="" ${task.done ? "checked" : ""}>
                         ${task.description}
                         <button id="${index}" class="btn btn-delete"><i id="${index}" class="fa fa-trash-o" style="font-size:1pem"></i></button>
