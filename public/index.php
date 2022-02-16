@@ -1,3 +1,11 @@
+<?php
+session_start();
+$_SESSION["newsession"]="Test";
+$_SESSION["ToDo"] = array();
+print_r($_SESSION);
+print_r($_COOKIE);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +20,6 @@
 </head>
 
 <body>
-
   <div class="container">
     <div class="child-container p-4">
 
@@ -23,10 +30,9 @@
         echo "<div class='mt-2 alert alert-warning alert-dismissible fade show' role='alert'>Вы не ввели данные</div>";
       } else {
         $task = $_POST['task'];
-        $file = 'tasks.txt';
-        $current = file_get_contents($file);
-        file_put_contents($file, $task . PHP_EOL, FILE_APPEND | LOCK_EX);
+        $_SESSION["ToDo"][] = [$task, "false"];
       }
+      print_r($_SESSION["ToDo"]);
       ?>
       <form method="POST">
         <div class="input-group">
@@ -41,13 +47,11 @@
 
 
           <?php
-          $fp = @fopen("tasks.txt", "r");
-          if ($fp) {
-            while (($buffer = fgets($fp, 4096)) !== false) {
-              echo "<li><input class='form-check-input done' type='checkbox' value=''>" . $buffer . "<button class='btn btn-delete'><i class='fa fa-trash-o' style='font-size:1pem'></i></button></li>";
-            }
-            fclose($fp);
-          }
+          $fp = $_SESSION["ToDo"];
+          foreach ($fp as $vehicle => $task_from_session) {
+            echo " $vehicle - $task_from_session";
+            // echo "<li><input class='form-check-input done' type='checkbox' value=''>" . $buffer . "<button class='btn btn-delete'><i class='fa fa-trash-o' style='font-size:1pem'></i></button></li>";
+        }
           ?>
         </ul>
       </div>
