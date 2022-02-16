@@ -1,9 +1,9 @@
 <?php
 session_start();
 $_SESSION["newsession"]="Test";
-$_SESSION["ToDo"] = array();
-print_r($_SESSION);
-print_r($_COOKIE);
+if (empty($_SESSION["ToDo"])){
+  $_SESSION["ToDo"] = array();
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,13 +26,10 @@ print_r($_COOKIE);
       <h1 class="py-2">ToDo List</h1>
 
       <?php
-      if (empty($_POST['task'])) {
-        echo "<div class='mt-2 alert alert-warning alert-dismissible fade show' role='alert'>Вы не ввели данные</div>";
-      } else {
+      if (!empty($_POST['task'])) {
         $task = $_POST['task'];
-        $_SESSION["ToDo"][] = [$task, "false"];
+        $_SESSION["ToDo"][] = [$task, false];
       }
-      print_r($_SESSION["ToDo"]);
       ?>
       <form method="POST">
         <div class="input-group">
@@ -44,26 +41,45 @@ print_r($_COOKIE);
       <div class="py-2">
         <h3>Will do</h3>
         <ul id="list-will-do">
-
-
+          
           <?php
           $fp = $_SESSION["ToDo"];
-          foreach ($fp as $vehicle => $task_from_session) {
-            echo " $vehicle - $task_from_session";
-            // echo "<li><input class='form-check-input done' type='checkbox' value=''>" . $buffer . "<button class='btn btn-delete'><i class='fa fa-trash-o' style='font-size:1pem'></i></button></li>";
-        }
+          foreach ($fp as $item => $task_from_session) {
+            if ($task_from_session[1] === false){
+              echo "<li>" . $task_from_session[0] . "<a class='btn btn-done' href='change_status.php?task_id=$item'><i class='fa fa-check' style='font-size:1pem'></i></a><a class='btn btn-delete' href='delete.php?task_id=$item'><i class='fa fa-trash-o' style='font-size:1pem'></i></a></li>";
+            }
+           }
           ?>
         </ul>
+
       </div>
 
       <div class="py-2">
         <h3>Done</h3>
         <ul id="list-done">
-          <!-- Вот сюда будет добавляться список завершенных задач -->
+        <?php
+          $fp = $_SESSION["ToDo"];
+          foreach ($fp as $item => $task_from_session) {
+            if ($task_from_session[1] === true){
+              echo "<li>" . $task_from_session[0] . "<a class='btn btn-done' href='change_status.php?task_id=$item'><i class='fa fa-check' style='font-size:1pem'></i></a><a class='btn btn-delete' href='delete.php?task_id=$item'><i class='fa fa-trash-o' style='font-size:1pem'></i></a></li>";
+            }
+           }
+          ?>
         </ul>
       </div>
     </div>
   </div>
+
+<script>
+  document.getElementById("list-will-do").addEventListener("click", function (event) {
+    if (event.target.tagName == "INPUT") {
+        listToDo[event.target.id].done = !listToDo[event.target.id].done;
+    }
+    if (event.target.tagName == "I" || event.target.tagName == "BUTTON") {
+        listToDo.splice(event.target.id, 1);
+    }
+});
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <!-- <script src="js/main.js"></script> -->
