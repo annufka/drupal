@@ -56,7 +56,7 @@ if (empty($_SESSION["ToDo"])){
 
       <div class="py-2">
         <h3>Done</h3>
-        <ul id="list-done">
+        <ul id="list-done" style="color: green;">
         <?php
           $fp = $_SESSION["ToDo"];
           foreach ($fp as $item => $task_from_session) {

@@ -4,9 +4,9 @@ body {
   background-image: url("../1489353.jpg");
 }
 
-ul {
+/* ul {
   list-style: none;
-}
+} */
 
 .container {
   display: flex;
