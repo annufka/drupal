@@ -39,13 +39,17 @@ services:
       - "traefik.http.services.web.loadbalancer.server.port=80"
 
   db:
-    image: mariadb
-    environment:
-      - MARIADB_ROOT_PASSWORD=admin
-      - MARIADB_DATABASE=test
-      - MARIADB_USER=user
-      - MARIADB_PASSWORD=admin
+    # image: mariadb
+    # environment:
+    #   - MARIADB_ROOT_PASSWORD=admin
+    #   - MARIADB_DATABASE=test
+    #   - MARIADB_USER=user
+    #   - MARIADB_PASSWORD=admin
+    # restart: always
+    image: mysql
     restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
