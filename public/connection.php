@@ -1,8 +1,8 @@
 <?php
 try {  
-    $DBH = new PDO("mysql:host=db;dbname=test", 'root', 'example');  
+    $conn = new PDO("mysql:host=db; dbname=test", 'root', 'example');
   }  
-  catch(PDOException $e) {  
-      echo $e->getMessage();  
+catch(PDOException $e) {  
+    echo $e->getMessage();  
   }
 ?>

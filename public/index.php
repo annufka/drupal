@@ -38,14 +38,12 @@ if (empty($_SESSION["ToDo"])){
         <h3>Will do</h3>
         <ul id="list-will-do">
           <!-- Вот сюда будет добавляться список задач -->
-          
         </ul>
       </div>
 
       <div class="py-2">
         <h3>Done</h3>
         <ul id="list-done">
-        
           <!-- Вот сюда будет добавляться список завершенных задач -->
         </ul>
       </div>

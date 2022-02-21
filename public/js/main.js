@@ -1,6 +1,17 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", function () {
+
+    var oReq = new XMLHttpRequest();
+    oReq.addEventListener("load", function () {
+        let responce = JSON.parse(this.responseText);
+        document.getElementById("list-will-do").innerHTML = generatePage(responce, false);
+        document.getElementById("list-done").innerHTML = generatePage(responce, true);
+    });
+    let data = new FormData();
+    oReq.open("GET", "add.php");
+    oReq.send(data);
+
     const saveButton = document.getElementById("btn-submit");
     saveButton.addEventListener("click", function () {
         var oReq = new XMLHttpRequest();
@@ -31,19 +42,20 @@ document.addEventListener("DOMContentLoaded", function () {
 function generatePage(responceArray, bool) {
     let listUl = "";
     for (let item in responceArray) {
-        if (responceArray[item][1] === bool) {
-            listUl += generateHTML(responceArray[item], item);
+        if (Boolean(Number(responceArray[item]['done'])) === bool) {
+            listUl += generateHTML(responceArray[item]);
         }
     }
     return listUl
 }
 
-function generateHTML(task, index) {
+
+function generateHTML(task) {
     let HTML = `<div class="todo-item">
                     <li class="d-flex justify-content-start align-items-center">
-                        <input id="${index}" class="form-check-input done" type="checkbox" value="" ${task[1] ? "checked" : ""}>
-                        ${task[0]}
-                        <button id="${index}" class="btn btn-delete"><i id="${index}" class="fa fa-trash-o" style="font-size:1pem"></i></button>
+                        <input id="${task['task_id']}" class="form-check-input done" type="checkbox" value="" ${Boolean(Number(task["done"])) ? "checked" : ""}>
+                        ${task['description']}
+                        <button id="${task['task_id']}" class="btn btn-delete"><i id="${task['task_id']}" class="fa fa-trash-o" style="font-size:1pem"></i></button>
                     </li>
                 </div>`;
     return HTML
