@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
             oReq.addEventListener("load", function () {
                 let status = oReq.status;
                 if (status == 201) {
-                    console.log(status);
+                    window.location.href="index.php";
+                    // console.log(status);
                 } if (status == 400) {
                     console.log(status);
                 }
@@ -34,7 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
             oReq.addEventListener("load", function () {
                 let status = oReq.status;
                 if (status == 200) {
-                    console.log(status);
+                    window.location.href="index.php";
+                    // console.log(status);
                 } if (status == 401) {
                     console.log(status);
                 } if (status == 404) {
@@ -56,6 +58,9 @@ document.addEventListener("DOMContentLoaded", function () {
         var oReq = new XMLHttpRequest();
         oReq.addEventListener("load", function () {
             let status = oReq.status;
+            if (status === 401) {
+                window.location.href="login_page.php";
+            }
         });
         let data = new FormData();
         oReq.open("GET", "logout.php");

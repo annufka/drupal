@@ -1,6 +1,5 @@
 <?php
 session_start();
-var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -22,8 +21,8 @@ var_dump($_SESSION);
         <form class="text-center">
             <input type="email" name="user-email" id="user-email" class="form-control my-2" placeholder="Email">
             <input type="password" name="user-password" id="user-password" class="form-control my-2" placeholder="Пароль">
-            <a href="" id="btn-submit-login" class="btn btn-success">Войти</a>
-            <a href="" id="btn-submit-register" class="btn btn-success">Регистрация</a>
+            <a href="#" id="btn-submit-login" class="btn btn-success">Войти</a>
+            <a href="#" id="btn-submit-register" class="btn btn-success">Регистрация</a>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

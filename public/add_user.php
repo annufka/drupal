@@ -1,6 +1,7 @@
 <?php
     session_start();
 
+    if(!isset($_SESSION['username']) || (trim($_SESSION['username']) == '')) {
     require_once 'connection.php';
     if (!empty($_POST['email']) && !empty($_POST['password'])) {
         $email = $_POST['email'];
@@ -16,7 +17,7 @@
 
             $_SESSION['auth'] = true;
             $_SESSION['username'] = $email;
-            header("Location:index.php");
+            header('HTTP/1.1 201 Created', true, 201);
         } else { 
             // пользователь существует, регистрация не нужна
             header('HTTP/1.1 400 Bad Request', true, 400);
@@ -26,4 +27,7 @@
     //   $sql->setFetchMode(PDO::FETCH_ASSOC);  
     //   $json = json_encode($sql->fetchAll());
     //   echo $json;
+    } else {
+        header("HTTP/1.1 200 OK");
+    }
 ?>

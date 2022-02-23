@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 if(!isset($_SESSION['username']) || (trim($_SESSION['username']) == '')) {
   header("location: login_page.php");
   exit();
@@ -28,7 +27,7 @@ if(!isset($_SESSION['username']) || (trim($_SESSION['username']) == '')) {
       <nav class="navbar navbar-light bg-light">
         <div class="container-fluid" id="login">
           <div>
-            <a href="login_page.php" id="btn-submit-logout" class="btn btn-outline-warning">Выйти</a>
+            <a href="#" id="btn-submit-logout" class="btn btn-outline-warning">Выйти</a>
           </div>
         </div>
       </nav>

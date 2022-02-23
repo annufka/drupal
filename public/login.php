@@ -18,9 +18,8 @@
                 if (password_verify($password, $user["password"])) {
                     $_SESSION['auth'] = true;
                     $_SESSION['username'] = $email;
-                    // header('HTTP/1.1 200 OK', true, 200);
-                    header("location: index.php");
-                    exit();
+                    header('HTTP/1.1 200 OK', true, 200);
+                    // header("location: index.php");
                 } else {
                     header('HTTP/1.1 401 Unauthorized', true, 401);
                 }
@@ -28,7 +27,6 @@
         }
 
       } else {
-        header("location: index.php");
-        exit();
+        header("HTTP/1.1 200 OK");
       }
       ?>
