@@ -11,10 +11,10 @@
     $sql = $conn->prepare('SELECT `done` from `Tasks` WHERE task_id = :task_id');
     $sql->execute($data);
     $task_done = $sql->fetch(PDO::FETCH_ASSOC);
-    $task_done = boolval($task_done['done']);
+    $task_done = $task_done['done'];
 
-    $data = array('task_id' => $task_id, 'task_done' => !$task_done);
-    $sql = $conn->prepare("UPDATE `Tasks` SET `done` = :task_done WHERE task_id = :task_id");
+    $data = array('task_id' => $task_id, 'task_done' => $task_done == "1" ? 0 : 1);
+    $sql = $conn->prepare("UPDATE `Tasks` SET `done` = :task_done WHERE `task_id` = :task_id");
     $sql->execute($data);
 
     $sql = $conn->query('SELECT * from `Tasks`');  

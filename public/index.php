@@ -1,7 +1,9 @@
 <?php
 session_start();
-if (empty($_SESSION["ToDo"])){
-  $_SESSION["ToDo"] = array();
+
+if(!isset($_SESSION['username']) || (trim($_SESSION['username']) == '')) {
+  header("location: login_page.php");
+  exit();
 }
 ?>
 
@@ -18,13 +20,24 @@ if (empty($_SESSION["ToDo"])){
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="js/main.js"></script>
+  <script src="js/user.js"></script>
 </head>
 
 <body>
 
+      <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid" id="login">
+          <div>
+            <a href="login_page.php" id="btn-submit-logout" class="btn btn-outline-warning">Выйти</a>
+          </div>
+        </div>
+      </nav>
+    
   <div class="container my-4">
+
     <div class="child-container p-4">
 
+	
       <h1 class="py-2">ToDo List</h1>
   
       <!-- Поле для ввода и кнопка, функция из main.js addItemToList, которая при нажатии инпута получает

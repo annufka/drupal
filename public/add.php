@@ -1,8 +1,7 @@
 <?php
 
-use function PHPSTORM_META\type;
-
     session_start();
+    
     require_once 'connection.php';
     if (!empty($_POST['new_task'])) {
       $task = $_POST['new_task'];
